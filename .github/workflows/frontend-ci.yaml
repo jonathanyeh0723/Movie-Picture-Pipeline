@@ -15,9 +15,9 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Verify repository structure
-      run: ls -la
-      working-directory: ./ # List the files to ensure checkout is correct
+    #- name: Verify repository structure
+    #  run: ls -la
+    #  working-directory: ./ # List the files to ensure checkout is correct
 
     - name: Setup NodeJS
       uses: actions/setup-node@v4
@@ -40,3 +40,30 @@ jobs:
     - name: LINT JOB
       run: npm run lint
       working-directory: ./starter/frontend
+
+  job2:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup NodeJS
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18
+
+    - name: Perform a cache action to restore cache before dependency install
+      id: cache-node-modules
+      uses: actions/cache@v4
+      with:
+        path: starter/frontend/
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
+    - name: Install dependencies
+      run: npm install
+      working-directory: ./starter/frontend
+
+    - name: TEST JOB
+      run: npm run test
