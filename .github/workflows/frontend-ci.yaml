@@ -67,3 +67,4 @@ jobs:
 
     - name: TEST JOB
       run: npm run test
+       working-directory: ./starter/frontend
