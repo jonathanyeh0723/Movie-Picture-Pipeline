@@ -15,6 +15,10 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
+    - name: Verify repository structure
+      run: ls -la
+      working-directory: ./ # List the files to ensure checkout is correct
+
     - name: Setup NodeJS
       uses: actions/setup-node@v4
       with:
