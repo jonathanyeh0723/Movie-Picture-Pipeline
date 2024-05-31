@@ -1,0 +1,29 @@
+name: Frontend Continuous Deployment
+
+on:
+  # Below 5 lines allow pipeline to be executed automatically on merges to the main branch
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
+  # Set manually triggered for testing
+  workflow_dispatch: 
+
+jobs:
+  INSTALL_BUILD_TEST:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup NodeJS
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18
+
+    - name: Install, Build, Test
+      run: |
+        npm install
+        npm run lint
+        npm run test
