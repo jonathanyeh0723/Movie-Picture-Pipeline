@@ -38,4 +38,5 @@ jobs:
     steps:
     - name: Build Docker image
       run: |
-        docker build --build-arg REACT_APP_MOVIE_API_URL=${{ env.REACT_APP_MOVIE_API_URL }} -t my-app:latest .  
+        docker build --build-arg REACT_APP_MOVIE_API_URL=${{ env.REACT_APP_MOVIE_API_URL }} -t my-app:latest .
+    working-directory: ./starter/frontend
