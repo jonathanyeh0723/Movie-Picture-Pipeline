@@ -10,6 +10,9 @@ on:
   # Set manually triggered for testing
   workflow_dispatch: 
 
+env:
+  REACT_APP_MOVIE_API_URL: 5000
+
 jobs:
   INSTALL_BUILD_TEST:
     runs-on: ubuntu-latest
@@ -28,3 +31,11 @@ jobs:
         npm run lint
         npm run test
       working-directory: ./starter/frontend
+
+  DOCKER_BUILD:
+    runs-on: ubuntu-latest
+    needs: INSTALL_BUILD_TEST
+    steps:
+    - name: Build Docker image
+      run: |
+        docker build --build-arg REACT_APP_MOVIE_API_URL=${{ env.REACT_APP_MOVIE_API_URL }} -t my-app:latest .  
