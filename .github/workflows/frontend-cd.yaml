@@ -57,6 +57,9 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region:  ${{ secrets.AWS_DEFAULT_REGION }}
 
+    - name: Check image availability
+      run: docker image ls
+
     - name: Logging into ECR
       run: aws ecr get-login-password --region ${{ secrets.AWS_DEFAULT_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_DEFAULT_REGION }}.amazonaws.com
 
