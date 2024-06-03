@@ -43,6 +43,7 @@ jobs:
 
     - name: Install flake8 explicitly
       run: pipenv install flake8
+      working-directory: ./starter/backend
 
     - name: Activate virtualenv and run lint
       run: pipenv run lint
