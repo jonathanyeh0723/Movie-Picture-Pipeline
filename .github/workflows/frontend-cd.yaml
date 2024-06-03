@@ -76,4 +76,4 @@ jobs:
       run: |
         kustomize edit set image frontend= ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_DEFAULT_REGION }}.amazonaws.com/${{ secrets.IMAGE_REPO_NAME }}:latest
         kustomize build | kubectl apply -f -
-       working-directory: ./starter/frontend/k8s
+      working-directory: ./starter/frontend/k8s
