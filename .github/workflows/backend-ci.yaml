@@ -41,6 +41,9 @@ jobs:
     - name: Check pipenv environment
       run: pipenv --venv  # Verify that the virtual environment is created
 
+    - name: Install flake8 explicitly
+      run: pipenv install flake8
+
     - name: Activate virtualenv and run lint
       run: pipenv run lint
       working-directory: ./starter/backend
