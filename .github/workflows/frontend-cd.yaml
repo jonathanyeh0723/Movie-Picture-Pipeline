@@ -74,7 +74,7 @@ jobs:
 
   DEPLOY_K8s:
     runs-on: ubuntu-latest
-    needs: AWS_ECR_BUILD_K8s_DEPLOY
+    needs: AWS_ECR_BUILD
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
