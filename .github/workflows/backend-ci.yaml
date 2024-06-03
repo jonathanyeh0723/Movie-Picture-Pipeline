@@ -26,6 +26,11 @@ jobs:
 
     - name: Install dependencies
       run: pipenv install --dev
+    
+    - name: Verify Pipfile
+      run: cat Pipfile  # Verify the content of Pipfile to ensure lint script exists
 
-    - name: Run lint
-      run: pipenv run lint
+    - name: Activate virtualenv and run lint
+      run: |
+        pipenv shell
+        pipenv run lint
