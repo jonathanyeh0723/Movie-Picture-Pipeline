@@ -23,14 +23,6 @@ jobs:
       with:
         path: ~/.local/share/virtualenvs
         key: deps-python-${{ hashFiles('**/Pipfile.lock') }}
-    #- name: Cache dependencies
-    #  id: cache
-    #  uses: actions/cache@v4
-    #  with:
-    #    path: ~/.local/share/virtualenvs
-    #    key: deps-python-${{ hashFiles('**/Pipfile.lock') }}
-    #    restore-keys: |
-    #      deps-python-
 
     - name: Install dependencies
       run: pipenv install --dev
@@ -47,4 +39,30 @@ jobs:
 
     - name: Activate virtualenv and run lint
       run: pipenv run lint
+      working-directory: ./starter/backend
+
+  TEST_JOB:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install pipenv
+      run: python -m pip install pipenv
+
+    - name: Install dependencies
+      run: pipenv install --dev
+
+    - name: Verify Pipfile
+      run: cat Pipfile  # Verify the content of Pipfile to ensure lint script exists
+
+    - name: Check pipenv environment
+      run: pipenv --venv  # Verify that the virtual environment is created
+
+    - name: Install flake8 explicitly
+      run: pipenv install flake8
+      working-directory: ./starter/backend
+
+    - name: Activate virtualenv and run lint
+      run: pipenv run test
       working-directory: ./starter/backend
