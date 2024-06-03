@@ -41,9 +41,6 @@ jobs:
     - name: Check pipenv environment
       run: pipenv --venv  # Verify that the virtual environment is created
 
-    - name: List pipenv scripts
-      run: pipenv run  # List all available scripts to ensure 'lint' is recognized
-
     - name: Activate virtualenv and run lint
       run: pipenv run lint
       working-directory: ./starter/backend
