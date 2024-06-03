@@ -45,7 +45,7 @@ jobs:
         docker image ls
       working-directory: ./starter/frontend
 
-  AWS_CONFIGURE_AND_LOGIN:
+  AWS_ECR_BUILD_K8s_DEPLOY:
     runs-on: ubuntu-latest
     needs: DOCKER_BUILD
     steps:
@@ -71,3 +71,9 @@ jobs:
         docker tag ${{ secrets.IMAGE_REPO_NAME }}:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_DEFAULT_REGION }}.amazonaws.com/${{ secrets.IMAGE_REPO_NAME }}:latest
         docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_DEFAULT_REGION }}.amazonaws.com/${{ secrets.IMAGE_REPO_NAME }}:latest
       working-directory: ./starter/frontend
+
+    - name: deploy to cluster
+      run: |
+        kustomize edit set image frontend= ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_DEFAULT_REGION }}.amazonaws.com/${{ secrets.IMAGE_REPO_NAME }}:latest
+        kustomize build | kubectl apply -f -
+       working-directory: ./starter/frontend/k8s
