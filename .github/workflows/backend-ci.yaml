@@ -1,0 +1,31 @@
+name: Backend Continuous Integration
+
+on:
+  workflow_dispatch:
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  LINT_JOB:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install pipenv
+      run: python -m pip install pipenv
+
+    - name: Cache dependencies
+      id: cache
+      uses: actions/cache@v4
+      with:
+        path: ~/.local/share/virtualenvs
+        key: deps-python-${{ hashFiles('**/Pipfile.lock') }}
+
+    - name: Install dependencies
+      run: pipenv install --dev
+
+    - name: Run lint
+      run: pipenv run lint
