@@ -41,7 +41,7 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build --build-arg REACT_APP_MOVIE_API_URL=${{ env.REACT_APP_MOVIE_API_URL }} -t ${{ secrets.IMAGE_REPO_NAME }}:latest .
+        docker build --build-arg REACT_APP_MOVIE_API_URL=${{ env.REACT_APP_MOVIE_API_URL }} -t ${{ secrets.FRONTEND_REPO_NAME }}:latest .
         docker image ls
       working-directory: ./starter/frontend
 
@@ -57,6 +57,7 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
         aws-region:  ${{ secrets.AWS_DEFAULT_REGION }}
 
     - name: Check image availability
@@ -67,9 +68,9 @@ jobs:
 
     - name: Docker build, tag, push 
       run: |
-        docker build --build-arg=REACT_APP_MOVIE_API_URL=http://localhost:5000 -t ${{ secrets.IMAGE_REPO_NAME }}:latest .
-        docker tag ${{ secrets.IMAGE_REPO_NAME }}:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_DEFAULT_REGION }}.amazonaws.com/${{ secrets.IMAGE_REPO_NAME }}:latest
-        docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_DEFAULT_REGION }}.amazonaws.com/${{ secrets.IMAGE_REPO_NAME }}:latest
+        docker build --build-arg=REACT_APP_MOVIE_API_URL=http://localhost:5000 -t ${{ secrets.FRONTEND_REPO_NAME }}:latest .
+        docker tag ${{ secrets.FRONTEND_REPO_NAME }}:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_DEFAULT_REGION }}.amazonaws.com/${{ secrets.FRONTEND_REPO_NAME }}:latest
+        docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_DEFAULT_REGION }}.amazonaws.com/${{ secrets.FRONTEND_REPO_NAME }}:latest
       working-directory: ./starter/frontend
 
   DEPLOY_K8s:
