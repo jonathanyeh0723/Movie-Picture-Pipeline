@@ -6,6 +6,8 @@ on:
   pull_request:
     branches:
       - main
+    paths:
+      - 'starter/backend/**'
 
 jobs:
   LINT_JOB:
@@ -78,4 +80,4 @@ jobs:
     - name: Build Docker image
       run: docker build --tag mp-backend:latest .
       working-directory: ./starter/backend
-    # OK
+    # OK.

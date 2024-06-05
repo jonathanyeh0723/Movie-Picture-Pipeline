@@ -7,6 +7,7 @@ on:
       - main
     types:
       - closed
+
   # Set manually triggered for testing
   workflow_dispatch: 
 
